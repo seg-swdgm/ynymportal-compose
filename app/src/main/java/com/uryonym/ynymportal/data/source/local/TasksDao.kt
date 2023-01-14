@@ -11,5 +11,5 @@ interface TasksDao {
     fun observeTasks(): Flow<List<Task>>
 
     @Query("select * from tasks where id = :taskId")
-    fun observeTaskById(id: String): Flow<Task>
+    fun observeTaskById(taskId: String): Flow<Task>
 }

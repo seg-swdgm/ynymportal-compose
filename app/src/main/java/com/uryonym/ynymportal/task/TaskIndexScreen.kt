@@ -1,4 +1,4 @@
-package com.uryonym.ynymportal.ui.task
+package com.uryonym.ynymportal.task
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -6,11 +6,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskIndexScreen(navController: NavHostController) {
+fun TaskIndexScreen(
+    onTaskClick: () -> Unit,
+    viewModel: TaskIndexViewModel = hiltViewModel()
+) {
     Surface(
         modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
     ) {
@@ -23,7 +26,7 @@ fun TaskIndexScreen(navController: NavHostController) {
                 modifier = Modifier.padding(padding)
             ) {
                 Text(text = "task index page")
-                Button(onClick = { navController.navigate("taskDetail") }) {
+                Button(onClick = onTaskClick) {
                     Text(text = "Detailへ")
                 }
             }

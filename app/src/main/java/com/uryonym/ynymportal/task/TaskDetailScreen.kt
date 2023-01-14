@@ -1,4 +1,4 @@
-package com.uryonym.ynymportal.ui.task
+package com.uryonym.ynymportal.task
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.*
