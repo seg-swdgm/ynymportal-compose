@@ -8,4 +8,6 @@ interface TasksRepository {
     fun getTasksStream(): Flow<Result<List<Task>>>
 
     fun getTaskStream(taskId: String): Flow<Result<Task>>
+
+    suspend fun saveTask(task: Task)
 }

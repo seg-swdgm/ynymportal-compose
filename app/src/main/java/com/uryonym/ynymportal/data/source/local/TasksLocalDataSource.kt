@@ -8,10 +8,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class TasksLocalDataSource internal constructor(
-    private val tasksDao: TasksDao,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val tasksDao: TasksDao, private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TasksDataSource {
     override fun getTasksStream(): Flow<Result<List<Task>>> {
         return tasksDao.observeTasks().map {
@@ -23,5 +23,9 @@ class TasksLocalDataSource internal constructor(
         return tasksDao.observeTaskById(taskId).map {
             Success(it)
         }
+    }
+
+    override suspend fun saveTask(task: Task) = withContext(ioDispatcher) {
+        tasksDao.insertTask(task)
     }
 }

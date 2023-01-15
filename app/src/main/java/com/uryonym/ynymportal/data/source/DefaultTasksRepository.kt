@@ -4,7 +4,9 @@ import com.uryonym.ynymportal.data.Result
 import com.uryonym.ynymportal.data.Task
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class DefaultTasksRepository(
     private val tasksLocalDataSource: TasksDataSource,
@@ -16,5 +18,11 @@ class DefaultTasksRepository(
 
     override fun getTaskStream(taskId: String): Flow<Result<Task>> {
         return tasksLocalDataSource.getTaskStream(taskId)
+    }
+
+    override suspend fun saveTask(task: Task) {
+        coroutineScope {
+            launch { tasksLocalDataSource.saveTask(task) }
+        }
     }
 }
